@@ -1,0 +1,370 @@
+:root {
+  --paper: #efe9df;
+  --paper-dark: #e3dccd;
+  --ink: #2b2a26;
+  --olive: #5b6b4f;
+  --olive-dark: #46543c;
+  --taupe: #8a7a68;
+  --taupe-dark: #6f6151;
+  --cream-line: #d8cfba;
+  --max-width: 720px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: "Cormorant Garamond", "Songti SC", "STSong", serif;
+  font-size: 19px;
+  line-height: 1.6;
+}
+
+/* ---------- Language switching ---------- */
+.lang-fr, .lang-zh, .lang-ru { }
+
+body[data-lang="fr"] .lang-zh,
+body[data-lang="fr"] .lang-ru { display: none; }
+
+body[data-lang="zh"] .lang-fr,
+body[data-lang="zh"] .lang-ru { display: none; }
+
+body[data-lang="ru"] .lang-fr,
+body[data-lang="ru"] .lang-zh { display: none; }
+
+/* ---------- Language switcher ---------- */
+.lang-switcher {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 50;
+  display: flex;
+  gap: 6px;
+  background: rgba(239, 233, 223, 0.9);
+  border: 1px solid var(--taupe);
+  border-radius: 999px;
+  padding: 4px;
+  backdrop-filter: blur(2px);
+}
+
+.lang-switcher button {
+  font-family: "Cormorant Garamond", serif;
+  font-size: 14px;
+  letter-spacing: 0.05em;
+  border: none;
+  background: transparent;
+  color: var(--olive-dark);
+  padding: 5px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+}
+
+.lang-switcher button.active {
+  background: var(--olive);
+  color: #fff;
+}
+
+/* ---------- Layout helpers ---------- */
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+section {
+  padding: 64px 0;
+}
+
+.label {
+  display: block;
+  text-transform: uppercase;
+  letter-spacing: 0.28em;
+  font-size: 14px;
+  color: var(--taupe-dark);
+  text-align: center;
+  margin-bottom: 18px;
+}
+
+h2 {
+  text-align: center;
+  font-weight: 500;
+  font-size: 34px;
+  margin: 0 0 32px;
+  color: var(--olive-dark);
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  position: relative;
+  padding: 90px 24px 120px;
+  text-align: center;
+  overflow: hidden;
+  background: linear-gradient(var(--paper), var(--paper-dark));
+}
+
+.monogram {
+  width: 128px;
+  height: 128px;
+  margin: 0 auto 28px;
+  border: 1px solid var(--olive);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.monogram::before,
+.monogram::after {
+  content: "";
+  position: absolute;
+  width: 22px;
+  height: 22px;
+  background: no-repeat center / contain;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M12 2c-3 4-7 6-7 11a7 7 0 0 0 14 0c0-5-4-7-7-11z' fill='%235b6b4f'/></svg>");
+  opacity: 0.85;
+}
+
+.monogram::before { top: -6px; left: 8px; transform: rotate(-25deg); }
+.monogram::after { bottom: -6px; right: 8px; transform: rotate(155deg); }
+
+.monogram span {
+  font-family: "Great Vibes", "Cormorant Garamond", cursive, serif;
+  font-size: 34px;
+  color: var(--olive-dark);
+}
+
+.hero .names {
+  font-family: "Great Vibes", "Cormorant Garamond", cursive, serif;
+  font-size: 76px;
+  line-height: 1.1;
+  margin: 0 0 8px;
+  color: var(--ink);
+}
+
+body[data-lang="zh"] .hero .names,
+body[data-lang="ru"] .hero .names {
+  font-family: "Cormorant Garamond", serif;
+  font-style: italic;
+  font-size: 48px;
+}
+
+.hero .date-line {
+  text-transform: uppercase;
+  letter-spacing: 0.3em;
+  font-size: 16px;
+  color: var(--taupe-dark);
+  margin-bottom: 40px;
+}
+
+.hero-photo {
+  margin-top: 20px;
+}
+
+/* ---------- Torn paper divider ---------- */
+.torn-divider {
+  height: 46px;
+  width: 100%;
+  background: var(--paper);
+  clip-path: polygon(
+    0% 100%, 3% 30%, 7% 70%, 12% 20%, 18% 60%, 24% 15%, 30% 55%,
+    36% 10%, 42% 65%, 48% 25%, 54% 60%, 60% 12%, 66% 58%, 72% 20%,
+    78% 62%, 84% 18%, 90% 55%, 96% 22%, 100% 45%, 100% 100%
+  );
+  position: relative;
+  top: 1px;
+}
+
+/* ---------- Placeholder photo boxes ---------- */
+.photo-placeholder {
+  border: 1.5px dashed var(--taupe);
+  border-radius: 6px;
+  background: rgba(138, 122, 104, 0.08);
+  color: var(--taupe-dark);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 15px;
+  letter-spacing: 0.03em;
+  padding: 20px;
+  min-height: 220px;
+}
+
+.hero .photo-placeholder {
+  max-width: 420px;
+  margin: 0 auto;
+  min-height: 260px;
+}
+
+/* ---------- The day / info card ---------- */
+.day-card {
+  background: var(--paper-dark);
+  border: 1px solid var(--cream-line);
+  border-radius: 10px;
+  padding: 36px 30px;
+  text-align: center;
+}
+
+.day-card .big-date {
+  font-size: 30px;
+  color: var(--olive-dark);
+  margin: 0 0 4px;
+}
+
+.day-card .hour {
+  font-size: 20px;
+  margin-bottom: 22px;
+}
+
+.day-card address {
+  font-style: normal;
+  font-size: 19px;
+  margin-bottom: 18px;
+}
+
+.btn {
+  display: inline-block;
+  background: var(--olive);
+  color: #fff !important;
+  text-decoration: none;
+  padding: 12px 28px;
+  border-radius: 999px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 14px;
+  transition: background 0.2s ease;
+}
+
+.btn:hover {
+  background: var(--olive-dark);
+}
+
+.btn.secondary {
+  background: var(--taupe);
+}
+
+.btn.secondary:hover {
+  background: var(--taupe-dark);
+}
+
+.btn-row {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 10px;
+}
+
+/* ---------- Timeline ---------- */
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-left: 2px solid var(--olive);
+  margin-left: 10px;
+}
+
+.timeline li {
+  position: relative;
+  padding: 0 0 30px 26px;
+}
+
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: -7px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--olive);
+}
+
+.timeline .time {
+  display: block;
+  font-weight: 600;
+  color: var(--olive-dark);
+  letter-spacing: 0.05em;
+}
+
+.placeholder-text {
+  color: var(--taupe-dark);
+  font-style: italic;
+}
+
+/* ---------- Cards (dress code / travel) ---------- */
+.info-block {
+  background: rgba(255, 255, 255, 0.35);
+  border: 1px solid var(--cream-line);
+  border-radius: 10px;
+  padding: 28px 26px;
+  margin-bottom: 18px;
+}
+
+.info-block h3 {
+  margin: 0 0 10px;
+  color: var(--olive-dark);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- RSVP / Cagnotte ---------- */
+.center {
+  text-align: center;
+}
+
+.subtext {
+  max-width: 480px;
+  margin: 0 auto 22px;
+  color: var(--ink);
+}
+
+.calendar-link {
+  display: inline-block;
+  margin-top: 16px;
+  font-size: 15px;
+  color: var(--olive-dark);
+  text-decoration: underline;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: inherit;
+}
+
+/* ---------- Footer ---------- */
+footer {
+  background: var(--olive-dark);
+  color: #f1efe6;
+  text-align: center;
+  padding: 40px 24px 50px;
+  font-size: 16px;
+}
+
+footer .monogram-small {
+  font-family: "Great Vibes", cursive;
+  font-size: 30px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+footer a {
+  color: #f1efe6;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 480px) {
+  .hero .names { font-size: 56px; }
+  body[data-lang="zh"] .hero .names,
+  body[data-lang="ru"] .hero .names { font-size: 36px; }
+  h2 { font-size: 28px; }
+  section { padding: 48px 0; }
+  .day-card { padding: 28px 18px; }
+}
