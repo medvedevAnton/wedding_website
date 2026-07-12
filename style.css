@@ -441,65 +441,61 @@ footer a {
 
 
 
-/* Language buttons */
+/* ================= LANGUAGE ================= */
 
 .nav-language {
 
-  display:flex;
-  gap:5px;
-
-  margin-left:10px;
-
-  padding-left:15px;
-
-  border-left:1px solid var(--cream-line);
+display:flex;
+gap:6px;
+align-items:center;
 
 }
 
 
 .nav-language button {
 
-  border:none;
+border:none;
+background:none;
 
-  background:none;
+font-family:"Cormorant Garamond",serif;
 
-  cursor:pointer;
+font-size:16px;
 
-  font-family:"Cormorant Garamond",serif;
+color:var(--olive-dark);
 
-  color:var(--olive-dark);
+cursor:pointer;
 
-  padding:4px 8px;
+padding:5px 10px;
+
+border-radius:999px;
 
 }
 
 
 .nav-language button.active {
 
-  background:var(--olive);
-
-  color:white;
-
-  border-radius:999px;
+background:var(--olive);
+color:white;
 
 }
 
 
-/* Burger */
+
+/* ================= BURGER ================= */
+
 
 .menu-toggle {
 
-  display:none;
+display:none;
 
-  border:none;
+border:none;
+background:none;
 
-  background:none;
+font-size:28px;
 
-  font-size:28px;
+color:var(--olive-dark);
 
-  color:var(--olive-dark);
-
-  cursor:pointer;
+cursor:pointer;
 
 }
 
@@ -511,69 +507,68 @@ footer a {
 @media(max-width:800px){
 
 
-  .nav-inner {
+.nav-inner{
 
-    padding:10px 18px;
-
-  }
-
-
-  .menu-toggle {
-
-    display:block;
-
-  }
-
-
-  .nav-links {
-
-    display:none;
-
-    position:absolute;
-
-    left:0;
-    right:0;
-    top:100%;
-
-    background:var(--paper);
-
-    border-bottom:1px solid var(--cream-line);
-
-    padding:25px;
-
-    flex-direction:column;
-
-    gap:18px;
-
-    text-align:center;
-
-  }
-
-
-  .nav-links.open {
-
-    display:flex;
-
-  }
-
-
-  .nav-language {
-
-    border-left:none;
-
-    border-top:1px solid var(--cream-line);
-
-    padding-top:15px;
-
-    margin:10px 0 0;
-
-  }
+position:relative;
 
 }
 
 
-section {
 
-  scroll-margin-top:70px;
+.menu-toggle{
+
+display:block;
+
+}
+
+
+
+.nav-links{
+
+display:none;
+
+position:absolute;
+
+top:100%;
+left:0;
+right:0;
+
+background:var(--paper);
+
+border-bottom:1px solid var(--cream-line);
+
+padding:25px;
+
+flex-direction:column;
+
+gap:18px;
+
+text-align:center;
+
+
+}
+
+
+
+.nav-links.open{
+
+display:flex;
+
+}
+
+
+
+.nav-language{
+
+border-top:1px solid var(--cream-line);
+
+padding-top:15px;
+
+margin-top:10px;
+
+justify-content:center;
+
+}
+
 
 }
