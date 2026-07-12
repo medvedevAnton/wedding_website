@@ -5,7 +5,8 @@
   var SUPPORTED = ["fr", "zh", "ru"];
 
 
-  // ---------- Language switching ----------
+  // ================= LANGUAGE =================
+
   function applyLang(lang) {
 
     if (SUPPORTED.indexOf(lang) === -1) return;
@@ -13,85 +14,166 @@
     document.body.setAttribute("data-lang", lang);
 
 
-    // Update active language button
-    document.querySelectorAll(".nav-language button").forEach(function (btn) {
+    document.querySelectorAll(".nav-language button")
+      .forEach(function(btn){
 
-      btn.classList.toggle(
-        "active",
-        btn.getAttribute("data-lang") === lang
-      );
+        btn.classList.toggle(
+          "active",
+          btn.getAttribute("data-lang") === lang
+        );
 
-    });
+      });
 
 
     try {
       localStorage.setItem(STORAGE_KEY, lang);
-    } catch (e) {
-      // Ignore storage errors
     }
+    catch(e){}
 
   }
 
 
 
-  // ---------- Initialisation ----------
-  document.addEventListener("DOMContentLoaded", function () {
+  document.addEventListener("DOMContentLoaded", function(){
 
 
-    // Restore saved language
-    var saved = null;
+    // restore language
+
+    var saved=null;
 
     try {
-      saved = localStorage.getItem(STORAGE_KEY);
-    } catch (e) {
-      // Ignore
+      saved=localStorage.getItem(STORAGE_KEY);
     }
+    catch(e){}
 
 
-    if (saved) {
+    if(saved){
       applyLang(saved);
     }
 
 
 
-    // Language buttons
-    document.querySelectorAll(".nav-language button").forEach(function (btn) {
+    // language buttons
 
-      btn.addEventListener("click", function () {
-
-        applyLang(btn.getAttribute("data-lang"));
-
-      });
-
-    });
+    document
+      .querySelectorAll(".nav-language button")
+      .forEach(function(btn){
 
 
+        btn.addEventListener("click",function(){
 
-    // ---------- Mobile navigation ----------
-
-    var menuToggle = document.getElementById("menu-toggle");
-    var navLinks = document.getElementById("nav-links");
-
-
-    if (menuToggle && navLinks) {
+          applyLang(
+            btn.getAttribute("data-lang")
+          );
 
 
-      menuToggle.addEventListener("click", function () {
+          // close mobile menu after language change
 
-        navLinks.classList.toggle("open");
+          var nav=document.getElementById("nav-links");
 
-      });
+          if(nav){
+            nav.classList.remove("open");
+          }
 
-
-
-      // Close menu after selecting a section
-      document.querySelectorAll(".nav-links a").forEach(function (link) {
-
-        link.addEventListener("click", function () {
-
-          navLinks.classList.remove("open");
 
         });
+
+
+      });
+
+
+
+
+    // ================= BURGER =================
+
+
+    var menuBtn=document.getElementById("menu-toggle");
+    var nav=document.getElementById("nav-links");
+
+
+    if(menuBtn && nav){
+
+
+      menuBtn.addEventListener("click",function(){
+
+
+        nav.classList.toggle("open");
+
+
+        menuBtn.classList.toggle("active");
+
+
+      });
+
+
+    }
+
+
+
+    // close menu when clicking a link
+
+    document
+      .querySelectorAll(".nav-links a")
+      .forEach(function(link){
+
+
+        link.addEventListener("click",function(){
+
+
+          if(nav){
+            nav.classList.remove("open");
+          }
+
+
+        });
+
+
+      });
+
+
+
+
+    // ================= CALENDAR =================
+
+
+    var calBtn=document.getElementById("add-to-calendar");
+
+
+    if(calBtn){
+
+
+      calBtn.addEventListener("click",function(e){
+
+        e.preventDefault();
+
+
+        var blob=new Blob(
+          [buildIcs()],
+          {
+            type:"text/calendar;charset=utf-8"
+          }
+        );
+
+
+        var url=URL.createObjectURL(blob);
+
+
+        var a=document.createElement("a");
+
+        a.href=url;
+
+        a.download="mariage-anton-tongyu.ics";
+
+
+        document.body.appendChild(a);
+
+        a.click();
+
+        document.body.removeChild(a);
+
+
+        URL.revokeObjectURL(url);
+
 
       });
 
@@ -104,112 +186,49 @@
 
 
 
-  // ---------- Add to calendar (.ics) ----------
 
-  function buildIcs() {
 
-    var pad = function (n) {
-      return String(n).padStart(2, "0");
+  function buildIcs(){
+
+
+    var pad=function(n){
+      return String(n).padStart(2,"0");
     };
 
 
-    var now = new Date();
+    var now=new Date();
 
 
-    var stamp =
-      now.getUTCFullYear() +
-      pad(now.getUTCMonth() + 1) +
-      pad(now.getUTCDate()) +
-      "T" +
-      pad(now.getUTCHours()) +
-      pad(now.getUTCMinutes()) +
-      pad(now.getUTCSeconds()) +
+    var stamp=
+      now.getUTCFullYear()+
+      pad(now.getUTCMonth()+1)+
+      pad(now.getUTCDate())+
+      "T"+
+      pad(now.getUTCHours())+
+      pad(now.getUTCMinutes())+
+      pad(now.getUTCSeconds())+
       "Z";
 
 
 
-    var lines = [
-
+    return [
       "BEGIN:VCALENDAR",
       "VERSION:2.0",
       "PRODID:-//Anton & Tongyu Wedding//FR",
-
       "BEGIN:VEVENT",
-
       "UID:anton-tongyu-wedding-2026@wedding-site",
-
-      "DTSTAMP:" + stamp,
-
+      "DTSTAMP:"+stamp,
       "DTSTART:20261003T140000Z",
-
       "DTEND:20261003T220000Z",
-
-      "SUMMARY:Mariage d'Anton & Tongyu / 安东与桐雨的婚礼 / Свадьба Антона и Тонью",
-
-      "DESCRIPTION:Ceremonie civile a partir de 16h. Programme complet sur le site du mariage.",
-
-      "LOCATION:34 Rue de Voisins\\, 78430 Louveciennes\\, France",
-
+      "SUMMARY:Mariage Anton & Tongyu",
+      "DESCRIPTION:Ceremonie civile a partir de 16h.",
+      "LOCATION:34 Rue de Voisins\\,78430 Louveciennes\\,France",
       "END:VEVENT",
-
       "END:VCALENDAR"
+    ].join("\r\n");
 
-    ];
-
-
-    return lines.join("\r\n");
 
   }
-
-
-
-
-  document.addEventListener("DOMContentLoaded", function () {
-
-
-    var calBtn = document.getElementById("add-to-calendar");
-
-
-    if (!calBtn) return;
-
-
-
-    calBtn.addEventListener("click", function (e) {
-
-
-      e.preventDefault();
-
-
-      var blob = new Blob(
-        [buildIcs()],
-        { type: "text/calendar;charset=utf-8" }
-      );
-
-
-      var url = URL.createObjectURL(blob);
-
-
-      var a = document.createElement("a");
-
-      a.href = url;
-
-      a.download = "mariage-anton-tongyu.ics";
-
-
-      document.body.appendChild(a);
-
-      a.click();
-
-      document.body.removeChild(a);
-
-
-      URL.revokeObjectURL(url);
-
-
-    });
-
-
-  });
 
 
 
